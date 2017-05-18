@@ -4,7 +4,7 @@ Sonder is just getting off the ground and we need to know how much to price our 
 
 This tool will be used by the Sonder customer support to enter reservations that they take by phone and by email.
 
-Your object is to build the form by which our team will log the booking, and the software that will compute the price.
+Your objective is to build the form by which our team will log the booking, and the software that will compute the price.
 
 ## Requirements
 
