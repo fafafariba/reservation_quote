@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516035133) do
+ActiveRecord::Schema.define(version: 20170618192557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170516035133) do
     t.bigint "unit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "tax_percent", precision: 8, scale: 2
     t.index ["unit_id"], name: "index_day_prices_on_unit_id"
   end
 
@@ -29,6 +30,15 @@ ActiveRecord::Schema.define(version: 20170516035133) do
     t.decimal "tax_percent", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "country", null: false
+    t.string "state", null: false
+    t.string "city", null: false
+    t.decimal "lat", precision: 10, scale: 6
+    t.decimal "lng", precision: 10, scale: 6
+    t.index ["ad_name"], name: "index_units_on_ad_name", unique: true
+    t.index ["city"], name: "index_units_on_city"
+    t.index ["country"], name: "index_units_on_country"
+    t.index ["state"], name: "index_units_on_state"
   end
 
   add_foreign_key "day_prices", "units"
