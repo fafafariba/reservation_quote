@@ -23,13 +23,13 @@ The project was skeleton was an Rails application with a Postgres database and m
 
 There are two tables: 
 `units`
--`ad_name`
--`tax_percent`
+- `ad_name`
+- `tax_percent`
 
 `day_prices`
--`unit_id`
--`date`
--`price`
+- `unit_id`
+- `date`
+- `price`
 
 ### Models
 
