@@ -45,33 +45,44 @@ end`
 
 ## My Approach
 
-### Backend
-
-#### Gems
+### Gems
 
 For testing purposes, I added Faker, Factory Girl, Database Cleaner, Shoulda-Matchers, and Annotate gems.
 
-#### Database Schema
+### Database Schema
 
 As the inquiry should have a location, I added `lat` and `lng` coordinate columns to the `units` to have quick access to geolocation. This may come handy when providing a precise location to an external service to obtain market rates for daily rental prices. In addition, I included `country`, `state`, and `city`, with indexing, for increased searchability when gathering data by region. An index and uniquness constraint was also added to `ad_name` for searchability and to ensure no two units have the same `ad_name`.
 
 The `day_prices` table has a 'belongs to' relation to `unit`, so presumably the unit `ad_name`, location, and taxes can easily be determined using that association. However, as tax percentages are subject to change over time, I added a `tax_percent` column to capture the tax rate at the time of inquiry.
 
-#### Models
+### Models
 
 Presence and uniqueness validations were added to both models to ensure data integrity.
 
-#### Controllers
+### Controllers
 
 The `Inquiries` controller takes a `start_date`, `end_date`, and `unit_id` as parameters. The difference of the dates determines the number of `DayPrice` objects that will be created and saved in the database. Using ActiveRecord's `transaction` method ensures that either all of the objects are saved simultaneously or none are if at least one object has an error. This prevents redundant entries if a post request isn't successful the first time and the user tries again.
 
-#### Service Objects
+### Service Objects
 
 I created service objects to keep the controller as 'skinny' as possible. The `DatesParam` class takes the `start_date` and `end_date` of the reservation request and returns an array of dates, for which prices needed to be found. The `Price`class then determines a `price` value for each of those dates, based on the location of the unit. Lastly, the `SumTaxes` class calculates the information that needs to be returned to the user after the inquiry has been recorded, i.e. the sum of the hotel over all the dates and the total taxes.
 
-#### Tests
+### Tests
 
 Using RSpec, I added tests for 'Unit' model, 'DayPrice' model, and 'Inquiries' controller.
+
+### Sample Inquiry
+
+AJAX request from frontend:
+
+  `$.ajax({
+    method: 'POST',
+    data: { start_date: '2017-06-19', end_date: '2017-06-21', unit_id: 4 },
+    url: '/inquries'
+  })`
+
+Response in JSON format:
+  `{ price: 223.53, taxes: 33.53 }`
 
 ## Improvements
 
