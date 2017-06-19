@@ -83,7 +83,7 @@ AJAX request from frontend:
   $.ajax({
     method: 'POST',
     data: { start_date: '2017-06-19', end_date: '2017-06-21', unit_id: 4 },
-    url: '/inquries'
+    url: '/inquiries'
   })
   ```
 
@@ -92,9 +92,16 @@ Response in JSON format:
 ```
  { price: 223.53, taxes: 33.53 }
 ```
+### Data Analysis
 
-## Improvements
+With the current setup, you can use SQL to pull data with specific paramters like location and price. For example
 
+```
+SELECT day_prices.price, (day_prices.price * day_prices.tax_percent) AS tax
+FROM day_prices
+JOIN units ON units.id = day_prices.unit_id
+WHERE unit.city = 'San Francisco' AND unit.id = 4 AND day_prices.date BETWEEN '2017-04-01' AND '2017-04-30';
+```
 
 
 
