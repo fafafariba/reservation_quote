@@ -19,6 +19,8 @@ To build the application by which Company X internal team can log the reservatio
 
 The project was skeleton was an Rails application with a Postgres database and models already set up.
 
+## MyApproach
+
 ### Gems
 
 For testing purposes, I added Faker, Factory Girl, Database Cleaner, Shoulda-Matchers, and Annotate gems.
@@ -36,7 +38,7 @@ The `day_prices` table has a 'belongs to' relation to `unit`, so presumably the 
 + `state`
 + `city`
 + `lat`
-+ `lng`
++ `lng`\
 
 `day_prices`
 - `unit_id`

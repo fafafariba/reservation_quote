@@ -1,3 +1,0 @@
-class DayPricesController < ApplicationController
-
-end
