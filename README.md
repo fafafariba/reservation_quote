@@ -19,32 +19,6 @@ To build the application by which Company X internal team can log the reservatio
 
 The project was skeleton was an Rails application with a Postgres database and models already set up.
 
-### Database
-
-There are two tables: 
-
-`units`
-- `ad_name`
-- `tax_percent`
-
-`day_prices`
-- `unit_id`
-- `date`
-- `price`
-
-### Models
-
- `class Unit < ApplicationRecord
-  has_many :day_prices, inverse_of: :unit
-end`
-
-`class DayPrice < ApplicationRecord
-  belongs_to :unit, inverse_of: :day_prices
-end`
-
-
-## My Approach
-
 ### Gems
 
 For testing purposes, I added Faker, Factory Girl, Database Cleaner, Shoulda-Matchers, and Annotate gems.
@@ -55,9 +29,39 @@ As the inquiry should have a location, I added `lat` and `lng` coordinate column
 
 The `day_prices` table has a 'belongs to' relation to `unit`, so presumably the unit `ad_name`, location, and taxes can easily be determined using that association. However, as tax percentages are subject to change over time, I added a `tax_percent` column to capture the tax rate at the time of inquiry.
 
+`units`
+- `ad_name`
+- `tax_percent`
++ `country`
++ `state`
++ `city`
++ `lat`
++ `lng`
+
+`day_prices`
+- `unit_id`
+- `date`
+- `price`
++ `tax_percent`
+
 ### Models
 
 Presence and uniqueness validations were added to both models to ensure data integrity.
+
+```
+class Unit < ApplicationRecord
+  validates :ad_name, presence: true, uniqueness: true
+  validates :tax_percent, :country, :state, :city, :lat, :lng, presence: true
+  ...
+end
+```
+
+```
+class DayPrice < ApplicationRecord
+  validates :date, :price, :unit_id, :tax_percent, presence: true
+  ...
+end
+```
 
 ### Controllers
 
@@ -75,14 +79,19 @@ Using RSpec, I added tests for 'Unit' model, 'DayPrice' model, and 'Inquiries' c
 
 AJAX request from frontend:
 
-  `$.ajax({
+  ```
+  $.ajax({
     method: 'POST',
     data: { start_date: '2017-06-19', end_date: '2017-06-21', unit_id: 4 },
     url: '/inquries'
-  })`
+  })
+  ```
 
 Response in JSON format:
-  `{ price: 223.53, taxes: 33.53 }`
+
+```
+ { price: 223.53, taxes: 33.53 }
+```
 
 ## Improvements
 
