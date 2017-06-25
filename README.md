@@ -38,7 +38,7 @@ The `day_prices` table has a 'belongs to' relation to `unit`, so presumably the 
 + `state`
 + `city`
 + `lat`
-+ `lng`\
++ `lng`
 
 `day_prices`
 - `unit_id`
@@ -84,7 +84,7 @@ AJAX request from frontend:
   ```
   $.ajax({
     method: 'POST',
-    data: { start_date: '2017-06-19', end_date: '2017-06-21', unit_id: 4 },
+    data: { start_date: '2017-06-19', end_date: '2017-06-21', ad_name: 'SOMA Loft' },
     url: '/inquiries'
   })
   ```
